@@ -23,6 +23,8 @@ coinbaseClient = Coinbase::Wallet::Client.new(api_key: api_key, api_secret:api_s
 
 
 # Use VCR to record/replay API calls to Coinbase
+
+# accounts
 VCR.use_cassette('coinbase_accounts') do
   begin
     account = coinbaseClient.accounts
@@ -37,4 +39,15 @@ VCR.use_cassette('coinbase_accounts') do
     puts "SSL error: #{ssl_error.message}"
   end
 
+end
+
+VCR.use_cassette('coinbase_create_address') do
+  begin
+    account = coinbaseClient.primary_account
+    address = account.create_address
+    puts "New address created. Name: #{address.id}, Address: #{address.address}"
+
+  rescue Coinbase::Wallet::APIError => e
+    puts "Coinbase wallet error: #{e.message}"
+  end
 end

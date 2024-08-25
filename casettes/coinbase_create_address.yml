@@ -1,0 +1,46 @@
+---
+http_interactions:
+  - request:
+      method: get
+      uri: https://api.coinbase.com/v2/accounts/primary
+      body:
+        encoding: US-ASCII
+        string: ""
+      headers:
+        Authorization:
+          - Bearer mock_api_key
+    response:
+      status:
+        code: 200
+        message: OK
+      headers:
+        Content-Type:
+          - application/json
+      body:
+        encoding: UTF-8
+        string: '{"data":{"id":"mock_account_id","balance":{"amount":"1.0","currency":"BTC"},"name":"Mock Account"}}'
+    recorded_at: "Sun, 25 Aug 2024 12:35:56 GMT"
+
+  - request:
+      method: post
+      uri: https://api.coinbase.com/v2/accounts/mock_account_id/addresses
+      body:
+        encoding: UTF-8
+        string: '{"name":"My New Address"}'
+      headers:
+        Authorization:
+          - Bearer mock_api_key
+        Content-Type:
+          - application/json
+    response:
+      status:
+        code: 201
+        message: Created
+      headers:
+        Content-Type:
+          - application/json
+      body:
+        encoding: UTF-8
+        string: '{"data":{"id":"gokhan sagirlar","address":"mock_address_12345"}}'
+    recorded_at: "Sun, 25 Aug 2024 12:36:56 GMT"
+recorded_with: VCR 6.0.0
